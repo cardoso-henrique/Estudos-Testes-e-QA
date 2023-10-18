@@ -1,4 +1,4 @@
-## Quality Assurance: Definição
+## Quality Assurance: Definição 
 
 Imagine um tester que realiza mais do que o esperado, um profissional que além de se entregar para o software, também busca melhorias em seu meio trabalhistico e otimização das metodologias que lá são ultilizadas. Esse é o Quality Assurance (QA), possuindo uma visão ampla do projeto, um QA segue além da perspectiva do programa e do que ele entrega, tendo seu foco em garantir a excelência em todos os aspectos. 
 Enquanto um teste comum busca apenas cumprir o que é proposto, o QA se preocupa em entregar da melhor forma possível, como em de que forma a equipe está se organizando, como tornar a produção sera mais eficiente, que maneiras podem ser feitas pra melhhorarem os custos do produto, se ele pode entregar fatores relevantes além do solicitado entre outros. 
@@ -131,7 +131,7 @@ Um teste de integração de banco de dados integra seu código a um banco de dad
 
 Outro exemplo, testar se seu serviço se integra a um serviço separado por meio de uma API REST pode ser assim:
 
-![Figura 7](https://martinfowler.com/articles/practical-test-pyramid/httpIntegrationTest.png)
+![Figura 7.](https://martinfowler.com/articles/practical-test-pyramid/httpIntegrationTest.png)
 
 esse tipo de teste de integração verifica se seu aplicativo pode se comunicar corretamente com um serviço separado
 
