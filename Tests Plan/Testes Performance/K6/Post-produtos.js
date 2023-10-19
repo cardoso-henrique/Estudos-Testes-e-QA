@@ -7,12 +7,47 @@ import execution from 'k6/execution';
 //Definindo constante da URL
 const url = 'http://127.0.0.1:8000';
 
-///Métricas thresholds Definidas manualmente
+//Definindo estágios do teste e métricas
+
+//Métricas thresholds Definidas manualmente
 import { Trend, Rate, Gauge } from 'k6/metrics';
 //Definindo a constante/nome da métrica e o seu tipo de valor 
 export const TrendRTT = new Trend('RTT');
 export const GaugeContentSize = new Gauge('ContentSize');
 export const FailRate = new Rate('fail_rate');
+
+
+export const options = {
+    //Definindo as métricas de rampas de VUs e tempos
+    stages:[
+        { duration: '1s', target: 2 }, // traffic ramp-up from users for target time
+        { duration: '5s', target: 5 }, // stay at users for target time
+        { duration: '1s', target: 0 }, // ramp-down to users in target time
+    ],
+    //Definindo 
+    thresholds: {
+        //Definidas pelo K6 (tem que ser exatamente igual o nome da métrica que o k6 responde)
+        http_req_failed: ['rate < 0.02'],// http errors should be less than %
+        http_req_duration: ['p(90)<200', 'p(95)<350', 'p(99)<350'],// % of requests should be below time in ms
+        http_req_waiting: ['avg < 350'],// time requests waiting should be below time in ms
+        data_sent: ['rate > 100'],// returned content must be bigger than bytes
+        data_received: ['rate > 100'],// VUs must be bigger than
+        iteration_duration: ['p(90) < 3000'],// % of requests should be below time in ms
+        http_req_blocked: ['p(99)<350', 'p(90)<200', 'avg<200', 'med<150', 'min<100'],// % of requests should be below time in ms
+        http_req_connecting: ['p(99)<350', 'p(90)<200', 'avg<200', 'med<150', 'min<100'],// % of requests should be below time in ms
+        http_req_receiving: ['p(99)<350', 'p(90)<200', 'avg<200', 'med<150', 'min<100'],// % of requests should be below time in ms
+        http_req_sending: ['p(99)<350', 'p(90)<200', 'avg<200', 'med<150', 'min<100'],// % of requests should be below time in ms
+        http_req_tls_handshaking: ['p(99)<350', 'p(90)<200', 'avg<200', 'med<150', 'min<100'],// % of requests should be below time in ms
+        http_reqs: ['count > 10'],// returned requests must be bigger than
+        iterations: ['count > 10'],// returned iterations must be bigger than
+        vus: ['value > 1'],// VUs must be bigger than
+        vus_max: ['value > 1'],// max VUs must be bigger than
+
+        //Métricas definidas manualmente (de acordo com as constantes definidas acima)
+        ContentSize: ['value > 1'],// returned content must be bigger than bytes
+        RTT: ['p(95)<350', 'p(90)<200', 'avg<200', 'med<150', 'min<100'],// % of requests should be below time in ms
+    },
+};
 
 
 //default function alimentada por checkData
